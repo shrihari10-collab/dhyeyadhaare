@@ -29,7 +29,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.75;font-size:17px;overflow-x:hidden;padding-bottom:84px}
+body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.75;font-size:17px;overflow-x:hidden;padding-bottom:0}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -142,16 +142,31 @@ input:focus,select:focus{outline:3px solid rgba(217,162,43,.55);border-color:var
 .poster img{width:min(100%,520px);margin:0 auto 18px;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.25);border:1px solid #e3c887}
 
 
-.player{display:flex;align-items:center;gap:16px;padding:18px 18px;border-radius:22px;border:2px solid var(--gold);color:#fff;background:linear-gradient(135deg,var(--maroon-d),var(--maroon-2) 60%,#b5471c);box-shadow:0 14px 34px rgba(111,18,32,.25)}
-.player .pb{flex:none;width:68px;height:68px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;background:linear-gradient(180deg,#ffe28a,#e0a526);color:var(--maroon-d);box-shadow:0 5px 0 #a9741a,0 10px 20px rgba(0,0,0,.35)}
-.player .pb:active{transform:translateY(2px)}
-.player .pb svg{width:30px;height:30px;fill:currentColor}
-.player .pb .ps{display:none}.player.on .pb .pl{display:none}.player.on .pb .ps{display:block}
-.player .info{flex:1;min-width:0}
-.player .ttl{font-family:var(--serif);font-weight:800;font-size:clamp(18px,5vw,22px);line-height:1.4;color:var(--gold-3)}
-.player .sub{font-size:13.5px;color:#ffe3a8;margin-bottom:8px}
-.player input[type=range]{width:100%;min-height:0;padding:0;border:0;background:none;height:24px;accent-color:var(--gold-2);cursor:pointer}
-.player .tm{display:flex;justify-content:space-between;font-size:13px;color:#ffe9c2;font-variant-numeric:tabular-nums;margin-top:-2px}
+.gate{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;overflow:hidden;padding:20px;
+  background:radial-gradient(120% 70% at 50% 100%,#e0762a 0%,rgba(224,118,42,0) 60%),linear-gradient(180deg,var(--maroon-d),var(--maroon) 55%,#a3331e);transition:opacity .6s}
+.gate.out{opacity:0;pointer-events:none}
+.gate .g-rays{position:absolute;inset:-60%;opacity:.45;background:repeating-conic-gradient(from 0deg,rgba(255,214,110,.55) 0 6deg,transparent 6deg 18deg);-webkit-mask:radial-gradient(circle,#000 0 20%,transparent 60%);mask:radial-gradient(circle,#000 0 20%,transparent 60%);animation:spin 90s linear infinite}
+.gate .g-in{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;width:min(100%,420px)}
+.gate .g-badge{width:min(68vw,36vh,330px);height:auto;aspect-ratio:1;filter:drop-shadow(0 16px 26px rgba(0,0,0,.5));animation:float 6s ease-in-out infinite}
+.gate .g-n{font-family:var(--serif);font-weight:800;font-size:clamp(28px,8vw,38px);color:var(--gold-3);margin-top:10px;line-height:1.3}
+.gate .g-s{font-size:16px;color:#ffe3a8;margin-bottom:12px}
+.gate .btn{width:100%;max-width:340px}
+.gate .btn-quiet{background:transparent;color:#ffe9c2;border:2px solid rgba(243,207,107,.7);font-size:16px;min-height:48px}
+body.locked{overflow:hidden;height:100vh}
+.mute{position:fixed;right:14px;bottom:calc(88px + env(safe-area-inset-bottom));z-index:60;width:50px;height:50px;border-radius:50%;border:2px solid var(--gold);cursor:pointer;display:none;place-items:center;font-size:22px;line-height:1;background:rgba(70,9,15,.92);color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.35);transition:bottom .3s,transform .15s}
+.mute.show{display:grid}
+.mute:active{transform:scale(.92)}
+body:not(.barshown) .mute{bottom:calc(18px + env(safe-area-inset-bottom))}
+.mute.off{animation:ring 2.2s ease-out infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(243,207,107,.7),0 6px 16px rgba(0,0,0,.35)}70%,100%{box-shadow:0 0 0 14px rgba(243,207,107,0),0 6px 16px rgba(0,0,0,.35)}}
+.promo{background:#2a0508;color:#f0d9a8;text-align:center;padding:30px 18px 36px;border-top:1px solid rgba(243,207,107,.25)}
+.promo .p1{font-size:13.5px;color:#d9bd86;letter-spacing:.3px}
+.promo .brand{display:block;margin:8px 0 4px;font-family:var(--sans);font-weight:800;font-size:clamp(22px,6.4vw,28px);letter-spacing:.34em;padding-left:.34em;color:var(--gold-2);text-decoration:none}
+.promo .tag{font-size:14px;color:#e8c98a;letter-spacing:.4px}
+.promo .url{display:inline-block;margin-top:6px;font-size:14.5px;font-weight:600;color:var(--gold-2);text-decoration:none;border-bottom:1px dotted rgba(243,207,107,.6)}
+.promo hr{border:0;height:1px;width:min(70%,260px);margin:20px auto 16px;background:linear-gradient(90deg,transparent,rgba(243,207,107,.6),transparent)}
+.promo .want{font-family:var(--serif);font-weight:800;font-size:18px;color:#fff;margin-bottom:12px}
+@media (prefers-reduced-motion:reduce){.gate .g-rays,.gate .g-badge,.mute.off{animation:none!important}}
 footer{background:var(--maroon-d);color:#ffe3a8;text-align:center;padding:30px 18px 26px;font-size:15px}
 footer .by{margin-top:16px;padding-top:12px;border-top:1px solid rgba(243,207,107,.3);font-family:var(--sans);font-size:13px;color:#e8c98a;letter-spacing:.2px}
 footer .by a{color:var(--gold-2);font-weight:600;text-decoration:none;border-bottom:1px dotted rgba(243,207,107,.6)}
@@ -176,6 +191,19 @@ footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-
 </style>
 </head>
 <body>
+
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-label="ಸ್ವಾಗತ">
+  <div class="g-rays" aria-hidden="true"></div>
+  <div class="g-in">
+    <img class="g-badge" src="badge.webp" width="1000" height="1000" alt="">
+    <p class="g-n">ನಮಸ್ತೆ 🙏</p>
+    <p class="g-s">ನಿಮಗಿದೋ ಆತ್ಮೀಯ ಆಮಂತ್ರಣ</p>
+    <button class="btn btn-gold" id="g-music" type="button">🎵 ಪ್ರಾರ್ಥನೆಯೊಂದಿಗೆ ಪ್ರವೇಶಿಸಿ</button>
+    <button class="btn btn-quiet" id="g-quiet" type="button">ಮೌನವಾಗಿ ಪ್ರವೇಶಿಸಿ</button>
+  </div>
+</div>
+<audio id="bgm" src="namaste-sada-vatsale.mp3" preload="none" loop></audio>
+<button class="mute" id="mute" type="button" aria-label="ಸಂಗೀತ">🔇</button>
 
 <header class="hero" id="top">
   <div class="orgs">
@@ -311,26 +339,6 @@ footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-
   </div>
 </section>
 
-<section class="song">
-  <div class="wrap rv">
-    <h2>ಪ್ರಾರ್ಥನೆ ಆಲಿಸಿ</h2>
-    <div class="orn"><svg viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg></div>
-    <div class="player" id="player">
-      <button class="pb" id="pbtn" type="button" aria-label="ಪ್ಲೇ / ಪಾಸ್">
-        <svg class="pl" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        <svg class="ps" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
-      </button>
-      <div class="info">
-        <div class="ttl">ನಮಸ್ತೇ ಸದಾ ವತ್ಸಲೇ</div>
-        <div class="sub">ಪ್ರಾರ್ಥನೆ</div>
-        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="ಹಾಡಿನ ಸ್ಥಾನ">
-        <div class="tm"><span id="t-cur">0:00</span><span id="t-dur">3:38</span></div>
-      </div>
-      <audio id="aud" src="namaste-sada-vatsale.mp3" preload="none"></audio>
-    </div>
-  </div>
-</section>
-
 <section class="poster" style="padding-top:10px">
   <div class="wrap rv">
     <h2>ಆಮಂತ್ರಣ ಪತ್ರ</h2>
@@ -345,8 +353,17 @@ footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-
   <b>ಶ್ರೀ ವಾದಿರಾಜ ಸಂಸ್ಕೃತಿ ಸಂವರ್ಧನ ಸಭಾ (ರಿ) ಹಾದಿಗಲ್ಲು</b>
   ಗ್ರಾಮಭಾರತಿ ಟ್ರಸ್ಟ್ (ರಿ) ಕಾರಣಗಿರಿ<br>
   ಎಲ್ಲರಿಗೂ ಆದರದ ಸ್ವಾಗತ 🙏
-  <div class="by">Website by <a href="https://www.stratovision.co.in/?utm_source=hosachiguru-invite&amp;utm_medium=website&amp;utm_campaign=footer" target="_blank" rel="noopener">Strato Vision Enterprises</a> · stratovision.co.in - M : +91 9740935900</div>
 </footer>
+
+<div class="promo">
+  <div class="p1">Website Designed &amp; Developed by</div>
+  <a class="brand" href="https://www.stratovision.co.in/?utm_source=hosachiguru-invite&amp;utm_medium=website&amp;utm_campaign=footer" target="_blank" rel="noopener">STRATO VISION</a>
+  <div class="tag">Elevating Perspectives | Digital &amp; Aerial</div>
+  <a class="url" href="https://www.stratovision.co.in/?utm_source=hosachiguru-invite&amp;utm_medium=website&amp;utm_campaign=footer_url" target="_blank" rel="noopener">www.stratovision.co.in</a>
+  <hr>
+  <div class="want">Want a Website Like This?</div>
+  <a class="btn btn-gold btn-sm" id="strato-contact" target="_blank" rel="noopener" href="https://www.stratovision.co.in/?utm_source=hosachiguru-invite&amp;utm_medium=website&amp;utm_campaign=contact">💬 Contact Strato Vision</a>
+</div>
 
 <div class="bar" id="bar"><a class="btn btn-gold" href="#rsvp">🙏 ನಾನು ಬರುತ್ತಿದ್ದೇನೆ</a></div>
 
@@ -361,6 +378,8 @@ var START = new Date("2026-11-14T10:00:00+05:30");
 var END   = new Date("2026-11-14T13:30:00+05:30");
 var VENUE = "ಶ್ರೀ ಅಭಯಲಕ್ಷ್ಮೀನೃಸಿಂಹ ದೇವಸ್ಥಾನ, ಹಾದಿಗಲ್ಲು, ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲೆ";
 var TITLE = "ಹೊಸಚಿಗುರು ಹಳೆಬೇರಿನ ಧ್ಯೇಯಧಾರೆ";
+// Optional: Strato Vision WhatsApp number with country code (e.g. "919XXXXXXXXX"). If set, the Contact button opens WhatsApp.
+var STRATO_WA = "";
 
 function $(id){return document.getElementById(id)}
 function pad(n){return n<10?"0"+n:""+n}
@@ -420,7 +439,8 @@ tick(); setInterval(tick,1000);
     var r=rs.getBoundingClientRect();
     var inRsvp=r.top<window.innerHeight*0.6 && r.bottom>0;
     var nearEnd=window.scrollY+window.innerHeight>document.documentElement.scrollHeight-260;
-    bar.classList.toggle("show",past&&!inRsvp&&!nearEnd);
+    var sh=past&&!inRsvp&&!nearEnd;
+    bar.classList.toggle("show",sh); document.body.classList.toggle("barshown",sh);
   }
   addEventListener("scroll",upd,{passive:true}); addEventListener("resize",upd); upd();
 })();
@@ -578,25 +598,43 @@ function fallback(text){
 }
 
 
-/* ===== Prayer song player ===== */
+if(STRATO_WA){ $("strato-contact").href="https://wa.me/"+STRATO_WA+"?text="+encodeURIComponent("Hi Strato Vision, ನಾನು Hosachiguru invitation website ನೋಡಿದೆ. ನನಗೂ ಇದೇ ರೀತಿಯ website ಬೇಕು."); }
+
+/* ===== Entry screen + background prayer music ===== */
 (function(){
-  var au=$("aud"), pl=$("player"), btn=$("pbtn"), sk=$("seek"), cur=$("t-cur"), dur=$("t-dur");
-  if(!au) return;
-  function f(t){t=Math.max(0,Math.floor(t||0));return Math.floor(t/60)+":"+pad(t%60)}
-  var drag=false;
-  btn.addEventListener("click",function(){
-    if(au.paused){ var p=au.play(); if(p&&p.catch) p.catch(function(){}); } else au.pause();
+  var gate=$("gate"), au=$("bgm"), tg=$("mute");
+  var VOL=0.4, fadeT=null, wantOn=false, resumeOnShow=false;
+  function setUi(){
+    var on=!au.paused;
+    tg.textContent=on?"🔊":"🔇";
+    tg.classList.toggle("off",!on);
+    tg.setAttribute("aria-label",on?"ಸಂಗೀತ ನಿಲ್ಲಿಸಿ":"ಸಂಗೀತ ಪ್ರಾರಂಭಿಸಿ");
+  }
+  function fadeIn(){
+    clearInterval(fadeT); au.volume=0; var v=0;
+    fadeT=setInterval(function(){ v+=0.04; if(v>=VOL){v=VOL;clearInterval(fadeT)} au.volume=v; },120);
+  }
+  function start(){
+    wantOn=true; au.loop=true; fadeIn();
+    var p=au.play(); if(p&&p.catch) p.catch(function(){ wantOn=false; setUi(); });
+  }
+  function stop(){ wantOn=false; clearInterval(fadeT); au.pause(); }
+  function enter(withMusic){
+    if(withMusic) start();
+    gate.classList.add("out"); document.body.classList.remove("locked");
+    tg.classList.add("show"); setUi();
+    setTimeout(function(){ gate.style.display="none"; },650);
+    var hero=document.querySelector(".cta-row a"); try{ window.scrollTo(0,0); }catch(e){}
+  }
+  $("g-music").addEventListener("click",function(){enter(true)});
+  $("g-quiet").addEventListener("click",function(){enter(false)});
+  tg.addEventListener("click",function(){ if(au.paused) start(); else stop(); });
+  au.addEventListener("play",setUi); au.addEventListener("pause",setUi);
+  document.addEventListener("visibilitychange",function(){
+    if(document.hidden){ if(!au.paused){ resumeOnShow=true; au.pause(); } }
+    else if(resumeOnShow){ resumeOnShow=false; var p=au.play(); if(p&&p.catch) p.catch(function(){}); }
   });
-  au.addEventListener("play",function(){pl.classList.add("on")});
-  au.addEventListener("pause",function(){pl.classList.remove("on")});
-  au.addEventListener("ended",function(){pl.classList.remove("on");sk.value=0;cur.textContent="0:00"});
-  au.addEventListener("loadedmetadata",function(){ if(isFinite(au.duration)) dur.textContent=f(au.duration) });
-  au.addEventListener("timeupdate",function(){
-    if(drag||!au.duration) return;
-    sk.value=Math.round(au.currentTime/au.duration*1000); cur.textContent=f(au.currentTime);
-  });
-  sk.addEventListener("input",function(){ drag=true; if(au.duration) cur.textContent=f(sk.value/1000*au.duration); });
-  sk.addEventListener("change",function(){ drag=false; if(au.duration) au.currentTime=sk.value/1000*au.duration; });
+  document.body.classList.add("locked");
 })();
 
 /* prefill from last visit */
