@@ -30,7 +30,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.75;font-size:17px;overflow-x:hidden;padding-bottom:84px}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .wrap{width:min(100% - 32px,760px);margin-inline:auto}
@@ -87,7 +87,7 @@ h2{font-family:var(--serif);font-weight:800;color:var(--maroon);font-size:clamp(
 .orn svg{width:18px;height:18px;fill:currentColor}
 
 .letter{position:relative;background:var(--paper);border:1.5px solid var(--gold);border-radius:22px;padding:30px 24px 26px;box-shadow:0 0 0 6px var(--cream),0 0 0 7.5px rgba(217,162,43,.55),0 18px 40px rgba(111,18,32,.12)}
-.letter p{font-family:var(--serif);font-size:18px;line-height:1.95;margin-bottom:14px;text-align:left}
+.letter p{font-family:var(--serif);font-size:18px;line-height:1.95;margin-bottom:14px;text-align:center}
 .letter .salute{font-weight:800;color:var(--maroon);font-size:20px}
 .letter .quote{margin:18px 0;padding:16px 18px;text-align:center;font-weight:800;font-size:21px;line-height:1.7;color:var(--maroon);background:linear-gradient(90deg,transparent,rgba(243,207,107,.35),transparent);border-block:1.5px solid var(--gold)}
 .letter .quote small{display:block;font-weight:500;font-size:14px;color:#8a5a2a;margin-top:2px}
@@ -141,6 +141,8 @@ input:focus,select:focus{outline:3px solid rgba(217,162,43,.55);border-color:var
 .poster img{width:min(100%,520px);margin:0 auto 18px;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.25);border:1px solid #e3c887}
 
 footer{background:var(--maroon-d);color:#ffe3a8;text-align:center;padding:30px 18px 26px;font-size:15px}
+footer .by{margin-top:16px;padding-top:12px;border-top:1px solid rgba(243,207,107,.3);font-family:var(--sans);font-size:13px;color:#e8c98a;letter-spacing:.2px}
+footer .by a{color:var(--gold-2);font-weight:600;text-decoration:none;border-bottom:1px dotted rgba(243,207,107,.6)}
 footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-2);margin-bottom:2px}
 
 .bar{position:fixed;inset:auto 0 0 0;z-index:50;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(70,9,15,0),rgba(70,9,15,.92) 45%);display:flex;justify-content:center;transform:translateY(120%);transition:transform .3s}
@@ -156,7 +158,7 @@ footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-
 }
 @media (min-width:700px){
   body{font-size:18px}
-  .grid{grid-template-columns:repeat(4,1fr)}
+  .grid{grid-template-columns:repeat(3,1fr)}
   .card.wide{grid-column:auto}
 }
 </style>
@@ -221,8 +223,7 @@ footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-
     <div class="grid">
       <div class="card"><div class="ic">🧭</div><h3>ಮಾರ್ಗದರ್ಶನ</h3><p>ಶ್ರೀ ಸುಧೀರ<br>ಅಖಿಲ ಭಾರತೀಯ ಸಹಬೌದ್ಧಿಕ ಪ್ರಮುಖರು</p></div>
       <div class="card"><div class="ic">🌳</div><h3>ಹಳೆಬೇರು – ಹೊಸಚಿಗುರು</h3><p>ಹಿರಿಯ ಪ್ರಚಾರಕರ, ಕಾರ್ಯಕರ್ತರ ಸಾಂಗತ್ಯ</p></div>
-      <div class="card"><div class="ic">🍽️</div><h3>ಊಟ ಉಪಾಹಾರ</h3><p>ವ್ಯವಸ್ಥೆ ಇದೆ</p></div>
-      <div class="card"><div class="ic">📖</div><h3>ಪುಸ್ತಕ ಉಡುಗೊರೆ</h3><p>ಭಾಗವಹಿಸಿದವರಿಗೆ ‘ಕಾರ್ಯಕರ್ತ’ ಪುಸ್ತಕ</p></div>
+      <div class="card wide"><div class="ic">📖</div><h3>ಪುಸ್ತಕ ಉಡುಗೊರೆ</h3><p>ಭಾಗವಹಿಸಿದವರಿಗೆ ‘ಕಾರ್ಯಕರ್ತ’ ಪುಸ್ತಕ</p></div>
     </div>
   </div>
 </section>
@@ -312,6 +313,7 @@ footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-
   <b>ಶ್ರೀ ವಾದಿರಾಜ ಸಂಸ್ಕೃತಿ ಸಂವರ್ಧನ ಸಭಾ (ರಿ) ಹಾದಿಗಲ್ಲು</b>
   ಗ್ರಾಮಭಾರತಿ ಟ್ರಸ್ಟ್ (ರಿ) ಕಾರಣಗಿರಿ<br>
   ಎಲ್ಲರಿಗೂ ಆದರದ ಸ್ವಾಗತ 🙏
+  <div class="by">Website by <a href="https://www.stratovision.co.in/?utm_source=hosachiguru-invite&amp;utm_medium=website&amp;utm_campaign=footer" target="_blank" rel="noopener">Strato Vision Enterprises</a> · stratovision.co.in</div>
 </footer>
 
 <div class="bar" id="bar"><a class="btn btn-gold" href="#rsvp">🙏 ನಾನು ಬರುತ್ತಿದ್ದೇನೆ</a></div>
@@ -385,7 +387,8 @@ tick(); setInterval(tick,1000);
     var past=window.scrollY>hero.offsetHeight*0.7;
     var r=rs.getBoundingClientRect();
     var inRsvp=r.top<window.innerHeight*0.6 && r.bottom>0;
-    bar.classList.toggle("show",past&&!inRsvp);
+    var nearEnd=window.scrollY+window.innerHeight>document.documentElement.scrollHeight-260;
+    bar.classList.toggle("show",past&&!inRsvp&&!nearEnd);
   }
   addEventListener("scroll",upd,{passive:true}); addEventListener("resize",upd); upd();
 })();
