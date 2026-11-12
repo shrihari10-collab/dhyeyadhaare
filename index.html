@@ -99,6 +99,7 @@ h2{font-family:var(--serif);font-weight:800;color:var(--maroon);font-size:clamp(
 .card h3{font-family:var(--serif);font-size:17px;line-height:1.45;color:var(--maroon)}
 .card p{font-size:14.5px;line-height:1.6;color:#6a4a3a;margin-top:4px}
 .card.wide{grid-column:1/-1}
+.card .tr{display:block;margin-top:6px;font-size:13.5px;color:#8a5a2a}
 
 .details{background:linear-gradient(180deg,var(--maroon) 0%,var(--maroon-d) 100%);color:#fff;border-radius:26px;overflow:hidden;box-shadow:0 18px 40px rgba(70,9,15,.35);border:2px solid var(--gold)}
 .details .date{padding:20px 14px;text-align:center;font-family:var(--serif);font-weight:800;font-size:clamp(23px,6.4vw,32px);color:var(--gold-3);background:rgba(0,0,0,.18);border-bottom:1px solid rgba(243,207,107,.4)}
@@ -140,6 +141,17 @@ input:focus,select:focus{outline:3px solid rgba(217,162,43,.55);border-color:var
 .poster{text-align:center}
 .poster img{width:min(100%,520px);margin:0 auto 18px;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.25);border:1px solid #e3c887}
 
+
+.player{display:flex;align-items:center;gap:16px;padding:18px 18px;border-radius:22px;border:2px solid var(--gold);color:#fff;background:linear-gradient(135deg,var(--maroon-d),var(--maroon-2) 60%,#b5471c);box-shadow:0 14px 34px rgba(111,18,32,.25)}
+.player .pb{flex:none;width:68px;height:68px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;background:linear-gradient(180deg,#ffe28a,#e0a526);color:var(--maroon-d);box-shadow:0 5px 0 #a9741a,0 10px 20px rgba(0,0,0,.35)}
+.player .pb:active{transform:translateY(2px)}
+.player .pb svg{width:30px;height:30px;fill:currentColor}
+.player .pb .ps{display:none}.player.on .pb .pl{display:none}.player.on .pb .ps{display:block}
+.player .info{flex:1;min-width:0}
+.player .ttl{font-family:var(--serif);font-weight:800;font-size:clamp(18px,5vw,22px);line-height:1.4;color:var(--gold-3)}
+.player .sub{font-size:13.5px;color:#ffe3a8;margin-bottom:8px}
+.player input[type=range]{width:100%;min-height:0;padding:0;border:0;background:none;height:24px;accent-color:var(--gold-2);cursor:pointer}
+.player .tm{display:flex;justify-content:space-between;font-size:13px;color:#ffe9c2;font-variant-numeric:tabular-nums;margin-top:-2px}
 footer{background:var(--maroon-d);color:#ffe3a8;text-align:center;padding:30px 18px 26px;font-size:15px}
 footer .by{margin-top:16px;padding-top:12px;border-top:1px solid rgba(243,207,107,.3);font-family:var(--sans);font-size:13px;color:#e8c98a;letter-spacing:.2px}
 footer .by a{color:var(--gold-2);font-weight:600;text-decoration:none;border-bottom:1px dotted rgba(243,207,107,.6)}
@@ -223,7 +235,7 @@ footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-
     <div class="grid">
       <div class="card"><div class="ic">🧭</div><h3>ಮಾರ್ಗದರ್ಶನ</h3><p>ಶ್ರೀ ಸುಧೀರ<br>ಅಖಿಲ ಭಾರತೀಯ ಸಹಬೌದ್ಧಿಕ ಪ್ರಮುಖರು</p></div>
       <div class="card"><div class="ic">🌳</div><h3>ಹಳೆಬೇರು – ಹೊಸಚಿಗುರು</h3><p>ಹಿರಿಯ ಪ್ರಚಾರಕರ, ಕಾರ್ಯಕರ್ತರ ಸಾಂಗತ್ಯ</p></div>
-      <div class="card wide"><div class="ic">📖</div><h3>ಪುಸ್ತಕ ಉಡುಗೊರೆ</h3><p>ಭಾಗವಹಿಸಿದವರಿಗೆ ‘ಕಾರ್ಯಕರ್ತ’ ಪುಸ್ತಕ</p></div>
+      <div class="card wide"><div class="ic">📖</div><h3>ಭಾಗವಹಿಸಿದವರಿಗೆ ‘ಕಾರ್ಯಕರ್ತ’ ಪುಸ್ತಕ ಉಡುಗೊರೆ</h3><p>ಶ್ರೀ ದತ್ತೋಪಂತ ಠೇಂಗಡೆಯವರ ‘ಕಾರ್ಯಕರ್ತ’<br><span class="tr">ಕನ್ನಡ ಅನುವಾದ: ಆನಂದಭಟ್, ಕಾರ್ಕಳ ಮತ್ತು ಹಾದಿಗಲ್ಲು ಲಕ್ಷ್ಮೀನಾರಾಯಣ</span></p></div>
     </div>
   </div>
 </section>
@@ -295,6 +307,26 @@ footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-
         <div><h3>ಹಾದಿಗಲ್ಲು ಲಕ್ಷ್ಮೀನಾರಾಯಣ</h3><p>ಶ್ರೀ ವಾದಿರಾಜ ಸಂಸ್ಕೃತಿ ಸಂವರ್ಧನ ಸಭಾ, ಹಾದಿಗಲ್ಲು</p><div class="num">9663702615</div></div>
         <div class="b"><a class="btn btn-maroon btn-sm" href="tel:+919663702615">📞 ಕರೆ</a><a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="https://wa.me/919663702615">WhatsApp</a></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="song">
+  <div class="wrap rv">
+    <h2>ಪ್ರಾರ್ಥನೆ ಆಲಿಸಿ</h2>
+    <div class="orn"><svg viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg></div>
+    <div class="player" id="player">
+      <button class="pb" id="pbtn" type="button" aria-label="ಪ್ಲೇ / ಪಾಸ್">
+        <svg class="pl" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="ps" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+      </button>
+      <div class="info">
+        <div class="ttl">ನಮಸ್ತೇ ಸದಾ ವತ್ಸಲೇ</div>
+        <div class="sub">ಪ್ರಾರ್ಥನೆ</div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="ಹಾಡಿನ ಸ್ಥಾನ">
+        <div class="tm"><span id="t-cur">0:00</span><span id="t-dur">3:38</span></div>
+      </div>
+      <audio id="aud" src="namaste-sada-vatsale.mp3" preload="none"></audio>
     </div>
   </div>
 </section>
@@ -544,6 +576,28 @@ function fallback(text){
   $("share-tip").textContent="ಚಿತ್ರ ಉಳಿಸಲಾಗಿದೆ. WhatsApp ತೆರೆಯುತ್ತಿದೆ — ಅಲ್ಲಿ ಚಿತ್ರವನ್ನೂ ಲಗತ್ತಿಸಿ.";
   setTimeout(function(){ window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank"); },600);
 }
+
+
+/* ===== Prayer song player ===== */
+(function(){
+  var au=$("aud"), pl=$("player"), btn=$("pbtn"), sk=$("seek"), cur=$("t-cur"), dur=$("t-dur");
+  if(!au) return;
+  function f(t){t=Math.max(0,Math.floor(t||0));return Math.floor(t/60)+":"+pad(t%60)}
+  var drag=false;
+  btn.addEventListener("click",function(){
+    if(au.paused){ var p=au.play(); if(p&&p.catch) p.catch(function(){}); } else au.pause();
+  });
+  au.addEventListener("play",function(){pl.classList.add("on")});
+  au.addEventListener("pause",function(){pl.classList.remove("on")});
+  au.addEventListener("ended",function(){pl.classList.remove("on");sk.value=0;cur.textContent="0:00"});
+  au.addEventListener("loadedmetadata",function(){ if(isFinite(au.duration)) dur.textContent=f(au.duration) });
+  au.addEventListener("timeupdate",function(){
+    if(drag||!au.duration) return;
+    sk.value=Math.round(au.currentTime/au.duration*1000); cur.textContent=f(au.currentTime);
+  });
+  sk.addEventListener("input",function(){ drag=true; if(au.duration) cur.textContent=f(sk.value/1000*au.duration); });
+  sk.addEventListener("change",function(){ drag=false; if(au.duration) au.currentTime=sk.value/1000*au.duration; });
+})();
 
 /* prefill from last visit */
 try{
