@@ -167,6 +167,19 @@ body:not(.barshown) .mute{bottom:calc(18px + env(safe-area-inset-bottom))}
 .promo hr{border:0;height:1px;width:min(70%,260px);margin:20px auto 16px;background:linear-gradient(90deg,transparent,rgba(243,207,107,.6),transparent)}
 .promo .want{font-family:var(--serif);font-weight:800;font-size:18px;color:#fff;margin-bottom:12px}
 @media (prefers-reduced-motion:reduce){.gate .g-rays,.gate .g-badge,.mute.off{animation:none!important}}
+.lokcard{text-align:center;color:#fff;border:2px solid var(--gold);border-radius:26px;padding:26px 18px 28px;box-shadow:0 18px 40px rgba(70,9,15,.35);
+  background:radial-gradient(120% 80% at 50% 0%,#6a1a0c 0%,#3a0f08 45%,#1f0705 100%)}
+.lokcard .dia{font-size:44px;line-height:1;filter:drop-shadow(0 0 14px rgba(255,178,56,.9));animation:flick 2.2s ease-in-out infinite}
+@keyframes flick{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.lokcard .k1{margin-top:6px;font-weight:700;color:var(--gold);letter-spacing:.5px}
+.lokcard h2{color:var(--gold-3);margin:2px 0 4px}
+.lokcard .la{font-size:15px;color:#e8c98a;line-height:1.6}
+.lokcard .lw{margin-top:10px;font-family:var(--serif);font-weight:800;font-size:19px;color:#fff}
+.lokcard .count{margin-top:14px}
+.lokcard .count div{min-width:64px}
+.lokcard .lmsg{margin:14px 0 2px;font-family:var(--serif);font-weight:800;font-size:19px;color:var(--gold-2);display:none}
+.lokcard .btn{margin-top:16px}
+@media (prefers-reduced-motion:reduce){.lokcard .dia{animation:none}}
 footer{background:var(--maroon-d);color:#ffe3a8;text-align:center;padding:30px 18px 26px;font-size:15px}
 footer .by{margin-top:16px;padding-top:12px;border-top:1px solid rgba(243,207,107,.3);font-family:var(--sans);font-size:13px;color:#e8c98a;letter-spacing:.2px}
 footer .by a{color:var(--gold-2);font-weight:600;text-decoration:none;border-bottom:1px dotted rgba(243,207,107,.6)}
@@ -281,6 +294,25 @@ footer b{display:block;font-family:var(--serif);font-size:18px;color:var(--gold-
         <a class="btn btn-gold btn-sm" id="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Abhayalakshmi+Narasimha+Temple+Hadigallu">🗺️ ಮ್ಯಾಪ್‌ನಲ್ಲಿ ನೋಡಿ</a>
         <a class="btn btn-ghost btn-sm" id="cal-link" target="_blank" rel="noopener" href="#">🔔 ಕ್ಯಾಲೆಂಡರ್‌ಗೆ ಸೇರಿಸಿ</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="lok" id="lokarpane" style="padding-top:8px">
+  <div class="wrap rv">
+    <div class="lokcard">
+      <div class="dia">🪔</div>
+      <div class="k1">ಲೋಕಾರ್ಪಣೆ</div>
+      <h2>ರಾಷ್ಟ್ರಸೇವಕಾಷ್ಟಕಮ್</h2>
+      <p class="la">ರಚನೆ: ಡಾ. ಶ್ರೀವತ್ಸ ಚಾರಣಕೋಡಿಗೆ<br>ಕನ್ನಡ ಅರ್ಥ ಸಹಿತ</p>
+      <p class="lw">14 ನವೆಂಬರ್ 2026, ಮಧ್ಯಾಹ್ನ 12.15 ಕ್ಕೆ</p>
+      <div class="count" id="lk-cd">
+        <div><b id="lk-h">--</b><em>ಗಂಟೆ</em></div>
+        <div><b id="lk-m">--</b><em>ನಿಮಿಷ</em></div>
+        <div><b id="lk-s">--</b><em>ಸೆಕೆಂಡ್</em></div>
+      </div>
+      <p class="lmsg" id="lk-msg">ಲೋಕಾರ್ಪಣೆಯಾಗಿದೆ 🙏</p>
+      <a class="btn btn-gold btn-sm" id="lk-btn" href="rashtrasevakashtakam.html">🪔 ಲೋಕಾರ್ಪಣೆ ಪುಟ ತೆರೆಯಿರಿ</a>
     </div>
   </div>
 </section>
@@ -637,6 +669,28 @@ if(STRATO_WA){ $("strato-contact").href="https://wa.me/"+STRATO_WA+"?text="+enco
   document.body.classList.add("locked");
 })();
 
+/* ===== Rashtrasevakashtakam release teaser ===== */
+(function(){
+  var REL=new Date("2026-11-14T12:15:00+05:30"), off=0, synced=false;
+  setTimeout(function(){synced=true},3500);
+  try{ fetch(location.href.split("#")[0],{method:"HEAD",cache:"no-store"}).then(function(r){
+    var d=r.headers.get("date"), t=d?new Date(d).getTime():NaN; if(!isNaN(t)) off=t-Date.now();
+  }).catch(function(){}).then(function(){synced=true}); }catch(e){synced=true;}
+  function upd(){
+    var diff=REL-(Date.now()+off), cd=$("lk-cd"), msg=$("lk-msg"), btn=$("lk-btn");
+    if(!cd) return;
+    if(diff<=0 && !synced) return;
+    if(diff>0){
+      var s=Math.floor(diff/1000);
+      $("lk-h").textContent=pad(Math.floor(s/3600)); $("lk-m").textContent=pad(Math.floor(s%3600/60)); $("lk-s").textContent=pad(s%60);
+      cd.style.display="flex"; msg.style.display="none";
+    }else{
+      cd.style.display="none"; msg.style.display="block"; btn.textContent="📜 ರಾಷ್ಟ್ರಸೇವಕಾಷ್ಟಕಮ್ ಓದಿ";
+    }
+  }
+  upd(); setInterval(upd,1000);
+})();
+
 /* prefill from last visit */
 try{
   var saved=JSON.parse(localStorage.getItem("hh_rsvp")||"null");
@@ -644,5 +698,7 @@ try{
 }catch(x){}
 })();
 </script>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
