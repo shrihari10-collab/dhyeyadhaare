@@ -275,7 +275,9 @@ const VERSES = [
   ar:"ನನ್ನ ಧ್ಯೇಯದ ಮಾರ್ಗದಲ್ಲಿ ದೃಢಸಂಕಲ್ಪದಿಂದ ನಿರಂತರವಾಗಿ ಮುನ್ನುಗ್ಗುತ್ತೇನೆ. ರಾಷ್ಟ್ರದ ಸೇವೆ ಮತ್ತು ಉನ್ನತಿಯ ಸಾಧನೆಗಾಗಿ ನನ್ನ ಜೀವನವನ್ನು ಸಾರ್ಥಕಗೊಳಿಸುತ್ತೇನೆ."}
 ];
 // "॥೧॥" / "।" munchina padadinda bere aagadante
-VERSES.forEach(v=>{ v.sa=v.sa.map(t=>t.replace(/ ([।॥])/g,'\u00a0$1')); v.kn=v.kn.map(t=>t.replace(/ ([।॥])/g,'\u00a0$1')); });
+// each line holds two padas separated by a comma -> show one pada per line (4 lines per shloka)
+const splitPadas = arr => arr.flatMap(t => { const p=t.split(/,\s+/); return p.length===2 ? [p[0]+',', p[1]] : [t]; });
+VERSES.forEach(v=>{ v.sa=splitPadas(v.sa.map(t=>t.replace(/ ([।॥])/g,'\u00a0$1'))); v.kn=splitPadas(v.kn.map(t=>t.replace(/ ([।॥])/g,'\u00a0$1'))); });
 const KN = "೦೧೨೩೪೫೬೭೮೯";
 const kd = n => String(n).split('').map(d => KN[d] ?? d).join('');
 const $ = id => document.getElementById(id);
@@ -407,38 +409,41 @@ async function makeImage(i){
     document.fonts.load('400 36px "Noto Sans Kannada"','ರಾಷ್ಟ್ರ')
   ]).catch(()=>{});
   const W=1080,H=1920,c=document.createElement('canvas'); c.width=W; c.height=H; const ctx=c.getContext('2d');
-  const bg=ctx.createRadialGradient(W/2,380,50,W/2,700,1300); bg.addColorStop(0,'#5a180c'); bg.addColorStop(.4,'#3a0f08'); bg.addColorStop(1,'#140503');
+  const bg=ctx.createRadialGradient(W/2,320,50,W/2,640,1300); bg.addColorStop(0,'#5a180c'); bg.addColorStop(.4,'#3a0f08'); bg.addColorStop(1,'#140503');
   ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
   ctx.strokeStyle='rgba(245,199,107,.55)'; ctx.lineWidth=3; ctx.strokeRect(46,46,W-92,H-92);
   ctx.strokeStyle='rgba(245,199,107,.25)'; ctx.lineWidth=1.5; ctx.strokeRect(62,62,W-124,H-124);
   ctx.textAlign='center'; ctx.textBaseline='alphabetic';
-  drawFlame(ctx,W/2,250,1.15);
-  ctx.fillStyle='#F5C76B'; ctx.font='700 64px "Noto Serif Devanagari", serif'; ctx.fillText('|| राष्ट्रसेवकाष्टकम् ||',W/2,520);
-  ctx.fillStyle='#E8B65A'; ctx.font='500 38px "Noto Serif Kannada", serif'; ctx.fillText('ರಾಷ್ಟ್ರಸೇವಕಾಷ್ಟಕಮ್',W/2,585);
+  drawFlame(ctx,W/2,200,.95);
+  ctx.fillStyle='#F5C76B'; ctx.font='700 58px "Noto Serif Devanagari", serif'; ctx.fillText('|| राष्ट्रसेवकाष्टकम् ||',W/2,420);
+  ctx.fillStyle='#E8B65A'; ctx.font='500 34px "Noto Serif Kannada", serif'; ctx.fillText('ರಾಷ್ಟ್ರಸೇವಕಾಷ್ಟಕಮ್',W/2,475);
   // number badge
-  ctx.fillStyle='#E7A33A'; ctx.beginPath(); ctx.arc(W/2,680,40,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#2a0c05'; ctx.font='700 40px "Noto Sans Kannada", sans-serif'; ctx.fillText(kd(i+1),W/2,695);
-  const v=VERSES[i]; let y=820; const maxW=W-200;
-  // ondu saalu ondE saalinalli: aksharada gaatra taane kadime aagutte
+  ctx.fillStyle='#E7A33A'; ctx.beginPath(); ctx.arc(W/2,550,36,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#2a0c05'; ctx.font='700 36px "Noto Sans Kannada", sans-serif'; ctx.fillText(kd(i+1),W/2,563);
+  const v=VERSES[i]; let y=670; const maxW=W-160;
   const fit=(t,weight,size,fam)=>{ let sz=size; do{ ctx.font=`${weight} ${sz}px ${fam}`; sz-=2; }while(ctx.measureText(t).width>maxW && sz>24); };
+  // 4 lines (one pada each) in Devanagari, then 4 lines in Kannada script
   ctx.fillStyle='#F5C76B';
-  v.sa.forEach(t=>{ fit(t,600,56,'"Noto Serif Devanagari", serif'); ctx.fillText(t,W/2,y); y+=88; });
-  y+=34; ctx.fillStyle='#F3E3C3';
-  v.kn.forEach(t=>{ fit(t,500,48,'"Noto Serif Kannada", serif'); ctx.fillText(t,W/2,y); y+=80; });
-  y+=30; ctx.strokeStyle='rgba(245,199,107,.4)'; ctx.setLineDash([10,10]); ctx.beginPath(); ctx.moveTo(200,y); ctx.lineTo(W-200,y); ctx.stroke(); ctx.setLineDash([]);
-  y+=80; ctx.fillStyle='#F5C76B'; ctx.font='700 40px "Noto Sans Kannada", sans-serif'; ctx.fillText('ಅರ್ಥ',W/2,y); y+=70;
-  ctx.fillStyle='#DCC8A6'; ctx.font='400 38px "Noto Sans Kannada", sans-serif';
-  wrapLines(ctx,v.ar,W-220).forEach(l=>{ ctx.fillText(l,W/2,y); y+=64; });
+  v.sa.forEach(t=>{ fit(t,600,50,'"Noto Serif Devanagari", serif'); ctx.fillText(t,W/2,y); y+=74; });
+  y+=14; ctx.fillStyle='#F3E3C3';
+  v.kn.forEach(t=>{ fit(t,500,42,'"Noto Serif Kannada", serif'); ctx.fillText(t,W/2,y); y+=64; });
+  y+=6; ctx.strokeStyle='rgba(245,199,107,.4)'; ctx.lineWidth=2; ctx.setLineDash([10,10]); ctx.beginPath(); ctx.moveTo(200,y); ctx.lineTo(W-200,y); ctx.stroke(); ctx.setLineDash([]);
+  y+=58; ctx.fillStyle='#F5C76B'; ctx.font='700 34px "Noto Sans Kannada", sans-serif'; ctx.fillText('ಅರ್ಥ',W/2,y); y+=54;
+  // meaning: shrink until it fits above the footer band
+  const LIM=1585; let fs=36, lines, lh;
+  do{ ctx.font=`400 ${fs}px "Noto Sans Kannada", sans-serif`; lines=wrapLines(ctx,v.ar,W-200); lh=Math.round(fs*1.5); fs-=2; }while(y+(lines.length-1)*lh>LIM && fs>22);
+  ctx.fillStyle='#DCC8A6';
+  lines.forEach(l=>{ ctx.fillText(l,W/2,y); y+=lh; });
   // Lokarpane patti
-  const by=H-330; ctx.strokeStyle='rgba(245,199,107,.6)'; ctx.lineWidth=2;
+  const by=1672; ctx.strokeStyle='rgba(245,199,107,.6)'; ctx.lineWidth=2;
   ctx.beginPath(); ctx.moveTo(120,by-52); ctx.lineTo(W-120,by-52); ctx.moveTo(120,by+26); ctx.lineTo(W-120,by+26); ctx.stroke();
   ctx.fillStyle='rgba(245,199,107,.07)'; ctx.fillRect(120,by-51,W-240,76);
   ctx.fillStyle='#F5C76B'; const band='ಲೋಕಾರ್ಪಣೆ · ಶ್ರೀ ಅಭಯಲಕ್ಷ್ಮೀನರಸಿಂಹ ದೇವಸ್ಥಾನ, ಹಾದಿಗಲ್ಲು · ೧೪.೧೧.೨೦೨೬';
   { let sz=32; do{ ctx.font=`600 ${sz}px "Noto Sans Kannada", sans-serif`; sz-=1; }while(ctx.measureText(band).width>W-280 && sz>18); }
   ctx.fillText(band,W/2,by);
-  ctx.fillStyle='#C9AE86'; ctx.font='400 32px "Noto Sans Kannada", sans-serif'; ctx.fillText('ರಚನೆ: ಡಾ. ಶ್ರೀವತ್ಸ ಚಾರಣಕೊಡಿಗೆ',W/2,H-230);
-  ctx.fillStyle='#F5C76B'; ctx.font='500 38px "Noto Serif Kannada", serif'; ctx.fillText('|| ಭಾರತಮಾತಾ ವಿಜಯತೇ ||',W/2,H-160);
-  ctx.fillStyle='rgba(201,174,134,.75)'; ctx.font='400 26px "Noto Sans Kannada", sans-serif'; ctx.fillText(location.host || 'ಧ್ಯೇಯಧಾರೆ',W/2,H-105);
+  ctx.fillStyle='#C9AE86'; ctx.font='400 30px "Noto Sans Kannada", sans-serif'; ctx.fillText('ರಚನೆ: ಡಾ. ಶ್ರೀವತ್ಸ ಚಾರಣಕೊಡಿಗೆ',W/2,1752);
+  ctx.fillStyle='#F5C76B'; ctx.font='500 36px "Noto Serif Kannada", serif'; ctx.fillText('|| ಭಾರತಮಾತಾ ವಿಜಯತೇ ||',W/2,1805);
+  ctx.fillStyle='rgba(201,174,134,.75)'; ctx.font='400 24px "Noto Sans Kannada", sans-serif'; ctx.fillText(location.host || 'ಧ್ಯೇಯಧಾರೆ',W/2,1840);
   return c;
 }
 async function shareImage(i,btn){
